@@ -50,10 +50,14 @@
 "trailer_curtain": "Trailer Curtain",
 "trailer": "Trailer",
 "cargo": {
-"food_items": "Food Items",
+"Food Items": "Food Items",
+"food_items":"Food Items",
 "dry_fmcg": "Dry Fast-Moving Consume",
+"Dry Fast-Moving Consume":"Dry Fast-Moving Consume",
 "dairy": "Dairy",
-"oils": "Oils"},
+"Dairy": "Dairy",
+"oils": "Oils",
+"Oils": "Oils"},
 "cities":{
 "riyadh": "Riyadh",
 "jeddah": "Jeddah",
@@ -105,7 +109,13 @@
 },
   "order": "Order",
   "status_changed_to": "status changed to",
-  "server_error":"Server Error"
+  "server_error":"Server Error",
+  "profile":"Profile",
+  "profile_title":"Profile",
+  "edit_title":"Edit Information",
+  "save_button":"Save Changes",
+  "data_saved":"Your data has been saved successfully",
+  "ok":"Ok"
 }
 
 

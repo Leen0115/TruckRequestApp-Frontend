@@ -111,7 +111,13 @@
  "order_updated": "آرڈر اپ ڈیٹ ہو گیا",
  "could_not_cancel": "آرڈر منسوخ نہیں ہو سکا",
  "order": "آرڈر",
- "status_changed_to": "تبدیل کر دیا گیا ہے"
+ "status_changed_to": "تبدیل کر دیا گیا ہے",
+ "profile": "پروفائل",
+"profile_title": "پروفائل",
+"edit_title": "معلومات میں ترمیم کریں",
+"save_button": "تبدیلیاں محفوظ کریں",
+"data_saved": "آپ کا ڈیٹا کامیابی سے محفوظ ہو گیا ہے",
+"ok": "ٹھیک ہے"
 
 
 

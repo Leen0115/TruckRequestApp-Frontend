@@ -1,25 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import {View,Text,Image,StyleSheet,TouchableOpacity,TextInput,Alert,I18nManager} from 'react-native';
-const i18n = require('../i18n').default;
 export default function Register({ navigation }) {
+  const i18n = require('../i18n').default;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [textAlign, setTextAlign] = useState<'left' | 'auto' | 'center' | 'right' | 'justify'>('left');
   const fullText = i18n.t('have_account_full');
   const parts = fullText.split('<login>');
-
-  useEffect(() => {
-    setTextAlign(I18nManager.isRTL ? 'right' : 'left');
-  }, []);
-
   const RegisterRequest = async () => {
     if (password !== confirmPassword) {
       Alert.alert(i18n.t('error'), i18n.t('password_mismatch'));
       return;
     }
-
     try {
       const response = await fetch('http://192.168.8.229:8000/api/register', {
         method: 'POST',
@@ -55,14 +48,14 @@ export default function Register({ navigation }) {
 
       <View style={styles.formContainer}>
         <TextInput
-          style={[styles.input, { textAlign }]}
+          style={[styles.input]}
           placeholder={i18n.t('name')}
           placeholderTextColor="#828282"
           value={name}
           onChangeText={setName}
         />
         <TextInput
-          style={[styles.input, { textAlign }]}
+          style={[styles.input]}
           placeholder={i18n.t('email')}
           placeholderTextColor="#828282"
           value={email}
@@ -70,7 +63,7 @@ export default function Register({ navigation }) {
           keyboardType="email-address"
         />
         <TextInput
-          style={[styles.input, { textAlign }]}
+          style={[styles.input]}
           placeholder={i18n.t('password')}
           placeholderTextColor="#828282"
           secureTextEntry
@@ -78,7 +71,7 @@ export default function Register({ navigation }) {
           onChangeText={setPassword}
         />
         <TextInput
-          style={[styles.input, { textAlign }]}
+          style={[styles.input]}
           placeholder={i18n.t('confirm_password')}
           placeholderTextColor="#828282"
           secureTextEntry

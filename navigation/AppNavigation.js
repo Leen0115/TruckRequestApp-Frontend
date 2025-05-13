@@ -8,6 +8,7 @@ import Register from '../Interface/Register';
 import TruckRequest from '../Interface/TruckRequest';
 import Success from '../Interface/Success';
 import Dashboard from '../Interface/Dashboard';
+import Profile from '../Interface/Profile';
 
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +23,7 @@ export default function AppNavigator() {
         <Stack.Screen name="TruckRequest" component={TruckRequest} />
         <Stack.Screen name="Success" component={Success} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
     </NavigationContainer>
   );

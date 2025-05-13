@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Login({ navigation }) {
+  const i18n = require('../i18n').default;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const i18n = require('../i18n').default;
   const loginRequest = async () => {
     try {
       const response = await fetch('http://192.168.8.229:8000/api/login', {

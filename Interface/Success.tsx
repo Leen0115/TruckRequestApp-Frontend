@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import LottieView from 'lottie-react-native';
 export default function Success({ navigation }) {
-  const i18n = require('../i18n').default;
+const i18n = require('../i18n').default;
   return (
     <View style={styles.container}>
       <LottieView 
@@ -11,10 +11,10 @@ export default function Success({ navigation }) {
         speed={0.6}
         loop={true}
         style={styles.tickAnimation}  />
-              <View style={styles.textcolumn}>
-              <Text style={styles.textstyle1}>{i18n.t('success_title1')}</Text>
-                <Text style={styles.textstyle2}>{i18n.t('success_title2')}</Text>
-              </View>
+     <View style={styles.textcolumn}>
+   <Text style={styles.textstyle1}>{i18n.t('success_title1')}</Text>
+    <Text style={styles.textstyle2}>{i18n.t('success_title2')}</Text>
+    </View>
       <TouchableOpacity
         activeOpacity={0.8}
         style={styles.button}

@@ -29,10 +29,10 @@ export default function TruckRequest({ navigation }) {
 
 
   const truckOptions = [
-    { label: i18n.t('trailer_short_sides'), value: 'trailer_short_sides' },
-    { label: i18n.t('trailer_high_sides'), value: 'trailer_high_sides' },
-    { label: i18n.t('trailer_curtain'), value: 'trailer_curtain' },
-    { label: i18n.t('trailer'), value: 'trailer' },
+    { label: i18n.t('trailer_short_sides'), value: 'Trailer Short Sides' },
+    { label: i18n.t('trailer_high_sides'), value: 'Trailer High Sides' },
+    { label: i18n.t('trailer_curtain'), value: 'Trailer Curtain' },
+    { label: i18n.t('trailer'), value: 'Trailer' },
   ];
 
   const Locations = [
@@ -49,10 +49,10 @@ export default function TruckRequest({ navigation }) {
   ];
 
   const cargoOptions = [
-    { label: i18n.t('cargo.food_items'), value: 'food_items' },
-    { label: i18n.t('cargo.dry_fmcg'), value: 'dry_fmcg' },
-    { label: i18n.t('cargo.dairy'), value: 'dairy' },
-    { label: i18n.t('cargo.oils'), value: 'oils' },
+    { label: i18n.t('cargo.food_items'), value: 'Food Items' },
+    { label: i18n.t('cargo.dry_fmcg'), value: 'Dry Fast-Moving Consume' },
+    { label: i18n.t('cargo.dairy'), value: 'Dairy' },
+    { label: i18n.t('cargo.oils'), value: 'Oils' },
   ];
 
   const handleSendRequest = async () => {
@@ -114,15 +114,20 @@ export default function TruckRequest({ navigation }) {
 {showAccountOptions && (
   <View style={styles.dropdownMenu}>
     <TouchableOpacity onPress={() => {
-  setShowAccountOptions(false);
-  navigation.navigate('Dashboard');
-}}>
-  <Text style={styles.menuItem}>{i18n.t('my_orders')}</Text>
-</TouchableOpacity>
-
-<TouchableOpacity onPress={handleLogout}>
-  <Text style={[styles.menuItem, { color: 'red' }]}>{i18n.t('logout')}</Text>
-</TouchableOpacity>
+      setShowAccountOptions(false);
+      navigation.navigate('Dashboard');
+    }}>
+      <Text style={styles.menuItem}>{i18n.t('my_orders')}</Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => {
+      setShowAccountOptions(false);
+      navigation.navigate('Profile');
+    }}>
+      <Text style={styles.menuItem}>{i18n.t('profile')}</Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={handleLogout}>
+      <Text style={[styles.menuItem, { color: 'red' }]}>{i18n.t('logout')}</Text>
+    </TouchableOpacity>
   </View>
 )}
 </TouchableOpacity>

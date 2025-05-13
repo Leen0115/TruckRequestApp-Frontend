@@ -108,7 +108,14 @@
 "could_not_cancel": "تعذر إلغاء الطلب",
 "order": "الطلب",
 "status_changed_to": "تم تغييره إلى",
-"server_error":"خطأ في الاتصال"
+"server_error":"خطأ في الاتصال",
+"profile": "الملف الشخصي",
+"profile_title": "الملف الشخصي",
+"edit_title": "تعديل المعلومات",
+"save_button": "حفظ التغييرات",
+"data_saved": "تم حفظ البيانات بنجاح",
+"ok": "حسنًا"
+
 
 }
 
