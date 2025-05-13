@@ -7,7 +7,7 @@ export default function Login({ navigation }) {
   const i18n = require('../i18n').default;
   const loginRequest = async () => {
     try {
-      const response = await fetch('http://192.168.8.50:8000/api/login', {
+      const response = await fetch('http://192.168.8.229:8000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

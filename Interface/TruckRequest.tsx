@@ -64,7 +64,7 @@ export default function TruckRequest({ navigation }) {
 
     try {
       const token = await AsyncStorage.getItem('token');
-      const response = await fetch('http://192.168.8.50:8000/api/truck-requests', {
+      const response = await fetch('http://192.168.8.229:8000/api/truck-requests', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
