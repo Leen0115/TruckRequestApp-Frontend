@@ -45,10 +45,11 @@
  "request_title": "Request a Truck",
 "my_orders": "My Orders",
 "logout": "Logout",
+"truckType":{
 "trailer_short_sides": "Trailer Short Sides",
 "trailer_high_sides": "Trailer High Sides",
 "trailer_curtain": "Trailer Curtain",
-"trailer": "Trailer",
+"trailer": "Trailer"},
 "cargo": {
 "Food Items": "Food Items",
 "food_items":"Food Items",
@@ -115,7 +116,10 @@
   "edit_title":"Edit Information",
   "save_button":"Save Changes",
   "data_saved":"Your data has been saved successfully",
-  "ok":"Ok"
+  "ok":"Ok",
+  "edit":"Edit",
+  "edit_order":"Edit Order",
+  "update_order": "Update Order"
 }
 
 

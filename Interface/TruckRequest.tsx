@@ -1,16 +1,13 @@
-
-import React, { useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView,
-  Platform, TouchableWithoutFeedback, Keyboard, Alert, Modal, FlatList, Image,StyleSheet
-} from 'react-native';
+import React, { useState,useEffect} from 'react';
+import {View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView,TouchableWithoutFeedback, Keyboard, 
+  Alert, Modal, FlatList, Image,StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import LottieView from 'lottie-react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function TruckRequest({ navigation }) {
   const i18n = require('../i18n').default;
-  
-
   const [showAccountOptions, setShowAccountOptions] = useState(false);
   const [pickupLocation, setPickupLocation] = useState('');
   const [dropoffLocation, setDropoffLocation] = useState('');
@@ -26,14 +23,62 @@ export default function TruckRequest({ navigation }) {
   const [showDropoffCities, setShowDropoffLocations] = useState(false);
   const [cargoType, setCargoType] = useState('');
   const [showCargoTypes, setShowCargoTypes] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+const [editOrderId, setEditOrderId] = useState(null);
 
+    useEffect(() => {
+  const loadEditData = async () => {
+    setIsEdit(true);
+    const stored = await AsyncStorage.getItem('editOrder');
+    if (stored) {
+      const order = JSON.parse(stored);
+      setPickupLocation(order.pickup_location || '');
+      setDropoffLocation(order.dropoff_location || '');
+      setPickupTime(order.pickup_time || '');
+      setDeliveryTime(order.delivery_time || '');
+      setTruckType(order.truck_type || '');
+      setWeight(order.weight?.toString()||'');
+      setCargoType(order.cargo_type || '');
+      setNote(order.note || '');
+    }
+  };
+  loadEditData();
+}, []);
+useFocusEffect(
+  React.useCallback(() => {
+    const loadEditOrder = async () => {
+      const orderJSON = await AsyncStorage.getItem('editOrder');
+      if (orderJSON) {
+        const order = JSON.parse(orderJSON);
+        setIsEdit(true);
+        setEditOrderId(order.id);
+        setPickupLocation(order.pickup_location);
+        setDropoffLocation(order.dropoff_location);
+        setPickupTime(order.pickup_time);
+        setDeliveryTime(order.delivery_time);
+        setTruckType(order.truck_type);
+        setWeight(order.weight?.toString()||'');
+        setCargoType(order.cargo_type);
+        setNote(order.note || '');
+      } else {
+        setIsEdit(false);
+        setEditOrderId(null);
+      }
+    };
+
+    loadEditOrder();
+    return () => {
+      AsyncStorage.removeItem('editOrder');
+    };
+  }, [])
+);
 
   const truckOptions = [
-    { label: i18n.t('trailer_short_sides'), value: 'Trailer Short Sides' },
-    { label: i18n.t('trailer_high_sides'), value: 'Trailer High Sides' },
-    { label: i18n.t('trailer_curtain'), value: 'Trailer Curtain' },
-    { label: i18n.t('trailer'), value: 'Trailer' },
-  ];
+    { label: i18n.t('truckType.trailer_short_sides'), value: 'Trailer Short Sides' },
+    { label: i18n.t('truckType.trailer_high_sides'), value: 'Trailer High Sides' },
+    { label: i18n.t('truckType.trailer_curtain'), value: 'Trailer Curtain' },
+    { label: i18n.t('truckType.trailer'), value: 'Trailer' },
+];
 
   const Locations = [
     { label: i18n.t('cities.riyadh'), value: 'Riyadh' },
@@ -64,8 +109,14 @@ export default function TruckRequest({ navigation }) {
 
     try {
       const token = await AsyncStorage.getItem('token');
-      const response = await fetch('http://192.168.8.229:8000/api/truck-requests', {
-        method: 'POST',
+      const url = isEdit
+  ? `http://192.168.8.229:8000/api/truck-requests/${editOrderId}/update`
+  : 'http://192.168.8.229:8000/api/truck-requests';
+
+const method = isEdit ? 'PUT' : 'POST';
+
+const response = await fetch(url, {
+  method,
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -77,17 +128,18 @@ export default function TruckRequest({ navigation }) {
           pickup_time: pickupTime,
           delivery_time: deliveryTime,
           truck_type: truckType,
-          weight,
+          weight: weight,
           cargo_type: cargoType,
           note,
         }),
       });
 
       const data = await response.json();
-      console.log('Response data:', data);
-
       if (response.ok) {
         navigation.navigate('Success');
+        if (isEdit) {
+  await AsyncStorage.removeItem('editOrder');
+}
       } else {
         Alert.alert('Error');
       }
@@ -107,10 +159,9 @@ export default function TruckRequest({ navigation }) {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.lottieIcons}>
-            <Text style={styles.title}>{i18n.t('request_title')}</Text>
+            <Text style={styles.title}>{isEdit ? i18n.t('edit_order') : i18n.t('request_title')}</Text>
             <TouchableOpacity onPress={() => setShowAccountOptions(!showAccountOptions)}>
   <LottieView source={require('../assets/Person.json')} style={styles.PersonIcon} />
-
 {showAccountOptions && (
   <View style={styles.dropdownMenu}>
     <TouchableOpacity onPress={() => {
@@ -153,8 +204,7 @@ export default function TruckRequest({ navigation }) {
                       onPress={() => {
                         setPickupLocation(item.value);
                         setShowPickupLocations(false);
-                      }}
-                    >
+                      }}>
                       <Text style={styles.optionText}>{item.label}</Text>
                     </TouchableOpacity>
                   )}
@@ -259,9 +309,9 @@ export default function TruckRequest({ navigation }) {
             <View style={styles.halfInputWrapper}>
             <Text style={styles.label}>{i18n.t('truck_type')}</Text>
 <TouchableOpacity style={styles.dropdownBox} onPress={() => setIsTruckTypeVisible(true)}>
-  <Text style={{ color: truckType ? '#000' : '#999'}}>
-    {(truckOptions.find(option => option.value === truckType)?.label) || i18n.t('select_type')}
-  </Text>
+  <Text style={{ color: truckType ? '#000' : '#999' }}>
+  {truckOptions.find(option => option.value.toLowerCase() === truckType?.toLowerCase())?.label || i18n.t('select_type')}
+</Text>
 </TouchableOpacity>
               <Modal transparent visible={isTruckTypeVisible} animationType="fade" onRequestClose={() => setIsTruckTypeVisible(false)}>
                 <TouchableOpacity style={styles.modalOverlay} onPress={() => setIsTruckTypeVisible(false)}>
@@ -335,7 +385,9 @@ export default function TruckRequest({ navigation }) {
   onChangeText={setNote}
 />
 <TouchableOpacity style={styles.button} onPress={handleSendRequest}>
-  <Text style={styles.buttonText}>{i18n.t('send_request')}</Text>
+  <Text style={styles.buttonText}>
+  {isEdit ? i18n.t('update_order') : i18n.t('send_request')}
+</Text>
 </TouchableOpacity>
           <Image source={require('../assets/Vector2.png')} style={styles.backgroundImage} />
         </View>
@@ -402,7 +454,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#000',
-    marginRight: 140,
+    marginRight: 200,
     marginTop: 7,
   },
   label: {

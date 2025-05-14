@@ -9,7 +9,6 @@ export default function UserDashboard({ navigation }) {
   const [orders, setOrders] = useState([]);
   const [activeTab, setActiveTab] = useState('in progress');
   const [lastStatuses, setLastStatuses] = useState({});
-
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case 'pending': return '#ccc';
@@ -20,7 +19,6 @@ export default function UserDashboard({ navigation }) {
       default: return '#aaa';
     }
   };
-
   const isStepActive = (current, step) => {
     const orderStages = ['pending', 'accepted', 'in progress', 'delivered'];
     return orderStages.indexOf(step.toLowerCase()) <= orderStages.indexOf(current.toLowerCase());
@@ -94,6 +92,11 @@ export default function UserDashboard({ navigation }) {
     return !['delivered', 'cancelled'].includes(order.status.toLowerCase());
   });
 
+  const handleEdit = async (order) => {
+  await AsyncStorage.setItem('editOrder', JSON.stringify(order));
+  navigation.navigate('TruckRequest');
+};
+
   return (
     <View style={styles.container}>
 <Image source={require('../assets/Vector.png')} style={styles.backgroundImage} />
@@ -108,19 +111,27 @@ export default function UserDashboard({ navigation }) {
             <LottieView source={require('../assets/Person.json')} style={styles.PersonIcon} />
           </TouchableOpacity>
 
-          {showAccountOptions && (
-            <View style={styles.dropdownMenu}>
-              <TouchableOpacity onPress={() => {
-                setShowAccountOptions(false);
-                navigation.navigate('TruckRequest');
-              }}>
-                <Text style={styles.menuItem}>{i18n.t('request_new_order')}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleLogout}>
-                <Text style={[styles.menuItem, { color: 'red' }]}>{i18n.t('logout')}</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+         {showAccountOptions && (
+  <View style={styles.dropdownMenu}>
+    <TouchableOpacity onPress={() => {
+      setShowAccountOptions(false);
+      navigation.navigate('TruckRequest');
+    }}>
+      <Text style={styles.menuItem}>{i18n.t('request_new_order')}</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity onPress={() => {
+      setShowAccountOptions(false);
+      navigation.navigate('Profile');
+    }}>
+      <Text style={styles.menuItem}>{i18n.t('profile')}</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity onPress={handleLogout}>
+      <Text style={[styles.menuItem, { color: 'red' }]}>{i18n.t('logout')}</Text>
+    </TouchableOpacity>
+  </View>
+)}
 
           
         </View>
@@ -141,10 +152,16 @@ export default function UserDashboard({ navigation }) {
           <View key={index} style={styles.card}>
             <View style={styles.cardHeader}>
               <Text style={styles.orderId}>{i18n.t('order_id')}: #{order.id}</Text>
-              {order.status.toLowerCase() === 'pending' && (
-                <TouchableOpacity onPress={() => cancelOrder(order.id)} style={styles.cancelButtonSmall}>
-                  <Text style={styles.cancelButtonText}>{i18n.t('cancel')}</Text>
-                </TouchableOpacity>
+{order.status.toLowerCase() === 'pending' && (
+                <>
+                <TouchableOpacity onPress={() => handleEdit(order)} style={styles.editButtonSmall}>
+                    <Text style={styles.editButtonText}>{i18n.t('edit')}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => cancelOrder(order.id)} style={styles.cancelButtonSmall}>
+                    <Text style={styles.cancelButtonText}>{i18n.t('cancel')}</Text>
+                  </TouchableOpacity>
+                  
+                </>
               )}
             </View>
 
@@ -352,10 +369,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 5,
+    width:70,
+    alignItems:'center'
   },
   cancelButtonText: {
     color: 'white',
     fontSize: 12,
     fontWeight: 'bold',
   },
+  editButtonSmall: {
+  backgroundColor: '#ccc',
+  paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 5,
+    width:70,
+  marginLeft: 100,
+  alignItems:'center'
+},
+editButtonText: {
+  color: '#fff',
+  fontSize: 12,
+  fontWeight: 'bold',
+},
 });

@@ -14,7 +14,7 @@ useEffect(() => {
   const loadUserData = async () => {
     const token = await AsyncStorage.getItem('token');
     if (!token) {
-      Alert.alert('Error', 'No authentication token found');
+      Alert.alert('Error');
       return;
     }
 
@@ -30,23 +30,19 @@ useEffect(() => {
       if (!response.ok) {
         const errorText = await response.text();
         console.error('API Error:', errorText);
-        Alert.alert('Error', 'Failed to load user data');
+        Alert.alert('Failed to load user data');
         return;
       }
 
       if (response.headers.get('content-type')?.includes('application/json')) {
         const data = await response.json();
-        console.log('Parsed data:', data);
-
         setName(data.name);
         setEmail(data.email);
       } else {
-        console.error('Invalid JSON response');
-        Alert.alert('Error', 'Invalid server response');
+        Alert.alert('Invalid server response');
       }
     } catch (error) {
-      console.error('Error loading user data:', error);
-      Alert.alert('Error', 'Failed to connect to the server');
+      Alert.alert('Failed to connect to the server');
     }
   };
 
@@ -74,7 +70,6 @@ useEffect(() => {
       });
 
       const data = await response.json();
-
       if (response.ok) {
         Alert.alert(i18n.t('data_saved'), '', [
           {
