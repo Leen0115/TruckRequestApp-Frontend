@@ -1,11 +1,10 @@
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import i18n from '../app/i18n';
-
 
 export default function Welcome() {
-  const { initLanguage, setLanguage } = require('../app/i18n');
+  const i18n = require('./i18n').default;
+  const { initLanguage, setLanguage } = require('./i18n');
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
   const [langLabel, setLangLabel] = useState(i18n.locale);

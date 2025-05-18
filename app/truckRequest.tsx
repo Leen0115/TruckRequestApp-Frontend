@@ -531,7 +531,7 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     position: 'absolute',
-    marginTop: 490,
+    marginTop: 540,
   },
 
 });

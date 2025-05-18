@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 export default function Success() {
 const router = useRouter();
-const i18n = require('../app/i18n').default;
+const i18n = require('./i18n').default;
   return (
     <View style={styles.container}>
       <LottieView 

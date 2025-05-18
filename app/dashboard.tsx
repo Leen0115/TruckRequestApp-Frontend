@@ -6,7 +6,7 @@ import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } fr
 
 export default function UserDashboard() {
   const router = useRouter();
-  const i18n = require('../app/i18n').default;
+  const i18n = require('./i18n').default;
   const [showAccountOptions, setShowAccountOptions] = useState(false);
   interface Order {
     id: number;

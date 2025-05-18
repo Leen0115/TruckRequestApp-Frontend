@@ -1,20 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import {
-  Alert,
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import i18n from './i18n';
+import { Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View, } from 'react-native';
 
 export default function Login() {
   const router = useRouter();
-
+  const i18n = require('./i18n').default;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -117,14 +108,14 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingHorizontal: 5,
     marginBottom: 10,
-    top: 170,},
+    top: 220,},
   button: {
     backgroundColor: '#5D437E',
     paddingHorizontal: 120,
     paddingVertical: 12,
     borderRadius: 10,
     marginTop: 20,
-    top: 180,},
+    top: 215,},
   buttonText: {
     color: '#fff',
     fontSize: 16,
@@ -133,7 +124,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 220,},
+    marginTop: 240,},
   signupText1: {
     fontSize: 16,
     color: '#000',},
