@@ -1,12 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import LottieView from 'lottie-react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function UserDashboard() {
   const router = useRouter();
   const i18n = require('./i18n').default;
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [showAccountOptions, setShowAccountOptions] = useState(false);
   interface Order {
     id: number;
@@ -33,7 +34,7 @@ export default function UserDashboard() {
   const fetchOrders = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
-      const response = await fetch('http://192.168.8.73:8000/api/my-requests', {
+      const response = await fetch('http://172.20.10.2:8000/api/my-requests', {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -57,7 +58,7 @@ export default function UserDashboard() {
   const cancelOrder = async (orderId: number) => {
     try {
       const token = await AsyncStorage.getItem('token');
-      const response = await fetch(`http://192.168.8.73:8000/api/cancel-request/${orderId}`, {
+      const response = await fetch(`http://172.20.10.2:8000/api/cancel-request/${orderId}`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -81,6 +82,7 @@ export default function UserDashboard() {
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token');
     setShowAccountOptions(false);
+    if (intervalRef.current) clearInterval(intervalRef.current); 
     router.push('./login');
   };
 

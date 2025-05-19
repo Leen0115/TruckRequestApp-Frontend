@@ -114,8 +114,8 @@ useFocusEffect(
     try {
       const token = await AsyncStorage.getItem('token');
       const url = isEdit
-  ? `http://192.168.8.73:8000/api/truck-requests/${editOrderId}/update`
-  : 'http://192.168.8.73:8000/api/truck-requests';
+  ? `http://172.20.10.2:8000/api/truck-requests/${editOrderId}/update`
+  : 'http://172.20.10.2:8000/api/truck-requests';
 
 const method = isEdit ? 'PUT' : 'POST';
 

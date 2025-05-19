@@ -17,7 +17,7 @@ export default function Profile() {
       const token = await AsyncStorage.getItem('token');
       if (!token) return;
       try {
-        const response = await fetch('http://192.168.8.73:8000/api/user', {
+        const response = await fetch('http://172.20.10.2:8000/api/user', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -32,12 +32,13 @@ export default function Profile() {
     loadUserData();
   }, []);
 
+
   const handleSaveChanges = async () => {
     const token = await AsyncStorage.getItem('token');
     if (!token) return;
 
     try {
-      const response = await fetch('http://192.168.8.73:8000/api/user/update', {
+      const response = await fetch('http://172.20.10.2:8000/api/user/update', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +59,7 @@ export default function Profile() {
         Alert.alert(i18n.t('data_saved'), '', [
           {
             text: i18n.t('ok'),
-            onPress: () => router.push('./trckRequest'),
+            onPress: () => router.push('./truckRequest'),
           },
         ]);
       } else {
