@@ -114,8 +114,8 @@ useFocusEffect(
     try {
       const token = await AsyncStorage.getItem('token');
       const url = isEdit
-  ? `http://192.168.8.51:8000/api/truck-requests/${editOrderId}/update`
-  : 'http://192.168.8.51:8000/api/truck-requests';
+  ? `http://192.168.8.73:8000/api/truck-requests/${editOrderId}/update`
+  : 'http://192.168.8.73:8000/api/truck-requests';
 
 const method = isEdit ? 'PUT' : 'POST';
 
@@ -458,7 +458,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#000',
-    marginRight: 200,
+    marginRight: 190,
     marginTop: 7,
   },
   label: {

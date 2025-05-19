@@ -17,7 +17,7 @@ export default function Profile() {
       const token = await AsyncStorage.getItem('token');
       if (!token) return;
       try {
-        const response = await fetch('http://192.168.8.51:8000/api/user', {
+        const response = await fetch('http://192.168.8.73:8000/api/user', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -37,7 +37,7 @@ export default function Profile() {
     if (!token) return;
 
     try {
-      const response = await fetch('http://192.168.8.229:8000/api/user/update', {
+      const response = await fetch('http://192.168.8.73:8000/api/user/update', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

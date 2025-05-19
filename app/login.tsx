@@ -11,7 +11,7 @@ export default function Login() {
 
   const loginRequest = async () => {
     try {
-      const response = await fetch('http://192.168.8.51:8000/api/login', {
+      const response = await fetch('http://192.168.8.73:8000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

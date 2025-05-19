@@ -33,7 +33,7 @@ export default function UserDashboard() {
   const fetchOrders = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
-      const response = await fetch('http://192.168.8.51:8000/api/my-requests', {
+      const response = await fetch('http://192.168.8.73:8000/api/my-requests', {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -57,7 +57,7 @@ export default function UserDashboard() {
   const cancelOrder = async (orderId: number) => {
     try {
       const token = await AsyncStorage.getItem('token');
-      const response = await fetch(`http://192.168.8.51:8000/api/cancel-request/${orderId}`, {
+      const response = await fetch(`http://192.168.8.73:8000/api/cancel-request/${orderId}`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
